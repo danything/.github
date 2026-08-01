@@ -59,7 +59,6 @@ worklog は、普段使っている **Slack・GitHub・GitLab・Backlog・Jira�
 | --- | --- |
 | [**k3s-gitops**](https://github.com/danything/k3s-gitops) | k3s クラスタ上のセルフホストアプリ群（AdGuard Home / ERPNext / Mattermost / Opengist / Portainer / VPN）を ArgoCD で管理 |
 | [**k3s-mirakurun-epgstation**](https://github.com/danything/k3s-mirakurun-epgstation) | mirakc + EPGStation の録画スタックを k3s にデプロイするマニフェスト |
-| [**k3s-konomitv**](https://github.com/danything/k3s-konomitv) | 上記 EPG スタックに [KonomiTV](https://github.com/tsukumijima/KonomiTV) を追加するマニフェスト。設定込みイメージを GHCR にビルド＆自動デプロイ |
 | [**helm-mosp**](https://github.com/danything/helm-mosp) | OSS 勤怠管理 [MosP](https://github.com/es-mind/MosP) の Docker イメージ化と Helm chart 配布。毎月最新コミットを自動ビルド |
 
 > [!NOTE]
