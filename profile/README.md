@@ -58,7 +58,6 @@ worklog は、普段使っている **Slack・GitHub・GitLab・Backlog・Jira�
 | Repository | 概要 |
 | --- | --- |
 | [**k3s-gitops**](https://github.com/danything/k3s-gitops) | k3s クラスタ上のセルフホストアプリ群（AdGuard Home / ERPNext / Mattermost / Opengist / Portainer / VPN）を ArgoCD で管理 |
-| [**k3s-mirakurun-epgstation**](https://github.com/danything/k3s-mirakurun-epgstation) | mirakc + EPGStation の録画スタックを k3s にデプロイするマニフェスト |
 | [**helm-mosp**](https://github.com/danything/helm-mosp) | OSS 勤怠管理 [MosP](https://github.com/es-mind/MosP) の Docker イメージ化と Helm chart 配布。毎月最新コミットを自動ビルド |
 
 > [!NOTE]
@@ -68,8 +67,9 @@ worklog は、普段使っている **Slack・GitHub・GitLab・Backlog・Jira�
 
 | Repository | 概要 |
 | --- | --- |
+| [**denpa**](https://github.com/danything/denpa) | mirakc と 2 つだけで完結するテレビ録画アプリ。予約・録画・エンコード・配信を担い、メディアサーバは置かない。Docker / Kubernetes 用のイメージを GHCR で配布 |
 | [**blog**](https://github.com/danything/blog) | [doany.io](https://doany.io) のソース。[Fuwari](https://github.com/saicaca/fuwari) ベースの Astro 製静的ブログ（Pagefind 検索 / remark42 コメント） |
-| [**xool**](https://github.com/danything/xool) | SvelteKit + Bun 製の Web アプリ |
+| [**xool**](https://github.com/danything/xool) | [x.doany.io](https://x.doany.io) — Webhook から 𝕏 に投稿する API と、LGTM 画像の生成・ホスティング |
 
 ## Tech Stack
 
