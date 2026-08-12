@@ -59,6 +59,7 @@ worklog は、普段使っている **Slack・GitHub・GitLab・Backlog・Jira�
 | --- | --- |
 | [**k3s-gitops**](https://github.com/danything/k3s-gitops) | k3s クラスタ上のセルフホストアプリ群（AdGuard Home / ERPNext / Mattermost / Opengist / Portainer / WireGuard）を ArgoCD で管理 |
 | [**helm-mosp**](https://github.com/danything/helm-mosp) | OSS 勤怠管理 [MosP](https://github.com/es-mind/MosP) の Docker イメージ化と Helm chart 配布。毎月最新コミットを自動ビルド |
+| [**genkan**](https://github.com/danything/genkan) | コンテナの玄関 — compose.yml 1枚のリバースプロキシ。ローカルの `*.localhost` から実ドメインまで同じ構成で振り分け |
 
 > [!NOTE]
 > クラスタ本体の初期構築（k3s のセットアップ、Traefik / ArgoCD / Sealed Secrets / 認証まわりのアドオン、StorageClass、バックアップ）は非公開のリポジトリで管理しています。上記の各リポジトリは、それが済んだクラスタに乗る**アプリ側のマニフェストのみ**を含みます。
