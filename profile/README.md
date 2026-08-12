@@ -39,7 +39,7 @@ worklog は、普段使っている **Slack・GitHub・GitLab・Backlog・Jira�
 - 🔗 **つなぐだけ** — 使っているサービスを連携したら、あとは月を選ぶだけ
 - 🔑 **GitHub アカウントでログイン** — 登録フォームはありません
 
-> 🎁 **早期利用期間中につき、全機能を無料で開放しています。**（正式リリース後は月額 1,200円・税別）
+> 🎁 **早期利用期間中につき、全機能を無料で開放しています。**（正式リリース後も直近 2 ヶ月分は無料。全期間さかのぼれる Pro プランが月額 1,200円・税別）
 
 [**▶ 今すぐ試す**](https://w.doany.io) ・ お問い合わせは [info@doany.io](mailto:info@doany.io)
 
@@ -57,7 +57,7 @@ worklog は、普段使っている **Slack・GitHub・GitLab・Backlog・Jira�
 
 | Repository | 概要 |
 | --- | --- |
-| [**k3s-gitops**](https://github.com/danything/k3s-gitops) | k3s クラスタ上のセルフホストアプリ群（AdGuard Home / ERPNext / Mattermost / Opengist / Portainer / VPN）を ArgoCD で管理 |
+| [**k3s-gitops**](https://github.com/danything/k3s-gitops) | k3s クラスタ上のセルフホストアプリ群（AdGuard Home / ERPNext / Mattermost / Opengist / Portainer / WireGuard）を ArgoCD で管理 |
 | [**helm-mosp**](https://github.com/danything/helm-mosp) | OSS 勤怠管理 [MosP](https://github.com/es-mind/MosP) の Docker イメージ化と Helm chart 配布。毎月最新コミットを自動ビルド |
 
 > [!NOTE]
@@ -67,7 +67,7 @@ worklog は、普段使っている **Slack・GitHub・GitLab・Backlog・Jira�
 
 | Repository | 概要 |
 | --- | --- |
-| [**denpa**](https://github.com/danything/denpa) | mirakc と 2 つだけで完結するテレビ録画アプリ。予約・録画・エンコード・配信を担い、メディアサーバは置かない。Docker / Kubernetes 用のイメージを GHCR で配布 |
+| [**denpa**](https://github.com/danything/denpa) | チューナーエージェント（選局）と 2 つだけで完結するテレビ録画アプリ。番組表・予約・録画・エンコード・配信・ライブ視聴を担い、メディアサーバは置かない。Docker / Kubernetes 用のイメージを GHCR で配布 |
 | [**blog**](https://github.com/danything/blog) | [doany.io](https://doany.io) のソース。[Fuwari](https://github.com/saicaca/fuwari) ベースの Astro 製静的ブログ（Pagefind 検索 / remark42 コメント） |
 | [**xool**](https://github.com/danything/xool) | [x.doany.io](https://x.doany.io) — Webhook から 𝕏 に投稿する API と、LGTM 画像の生成・ホスティング |
 
