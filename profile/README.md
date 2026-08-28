@@ -47,7 +47,7 @@ worklog は、普段使っている **Slack・GitHub・GitLab・Backlog・Jira�
 
 **事業計画中。**
 
-散らばっていて探しにくい情報を、探しやすい形に整えるサービスを構想しています。いまは調査と設計の段階です。
+中古車を型式から探せるようにするサービスを構想しています。いまはその土台として、国交省・運輸省が公表している燃費一覧（1997〜）から車両マスター（型式 → 通称名・製作者・諸元・販売期間）を組み立てているところです。
 
 続報は [doany.io](https://doany.io) にて。
 
@@ -57,20 +57,23 @@ worklog は、普段使っている **Slack・GitHub・GitLab・Backlog・Jira�
 
 | Repository | 概要 |
 | --- | --- |
-| [**k3s-gitops**](https://github.com/danything/k3s-gitops) | k3s クラスタ上のセルフホストアプリ群（AdGuard Home / ERPNext / Mattermost / Opengist / Portainer / WireGuard）を ArgoCD で管理 |
+| [**k3s-gitops**](https://github.com/danything/k3s-gitops) | k3s クラスタ上のセルフホストアプリ群（AdGuard Home / Cloudflare DDNS / ERPNext / Mattermost / Portainer / WireGuard / 3proxy）を ArgoCD で管理 |
 | [**helm-mosp**](https://github.com/danything/helm-mosp) | OSS 勤怠管理 [MosP](https://github.com/es-mind/MosP) の Docker イメージ化と Helm chart 配布。毎月最新コミットを自動ビルド |
 | [**genkan**](https://github.com/danything/genkan) | コンテナの玄関 — compose.yml 1枚のリバースプロキシ。ローカルの `*.localhost` から実ドメインまで同じ構成で振り分け |
 
 > [!NOTE]
-> クラスタ本体の初期構築（k3s のセットアップ、Traefik / ArgoCD / Sealed Secrets / 認証まわりのアドオン、StorageClass、バックアップ）は非公開のリポジトリで管理しています。上記の各リポジトリは、それが済んだクラスタに乗る**アプリ側のマニフェストのみ**を含みます。
+> クラスタ本体の初期構築（k3s のセットアップ、Traefik / ArgoCD / Sealed Secrets / 認証まわりのアドオン、StorageClass、バックアップ）は非公開のリポジトリで管理しています。上記の各リポジトリは、それが済んだクラスタに乗る**アプリ側のマニフェストのみ**を含み、直下の `k3s/argocd.yaml` を ApplicationSet が拾って Application を生成します。
 
 ### アプリケーション
 
 | Repository | 概要 |
 | --- | --- |
 | [**denpa**](https://github.com/danything/denpa) | チューナーエージェント（選局）と 2 つだけで完結するテレビ録画アプリ。番組表・予約・録画・エンコード・配信・ライブ視聴を担い、メディアサーバは置かない。Docker / Kubernetes 用のイメージを GHCR で配布 |
+| [**denpa-agent-windows**](https://github.com/danything/denpa-agent-windows) | denpa のチューナーエージェントの Windows 版。BonDriver で選局し、Linux 版（denpa 本体の `agent/`）と同じ HTTP 契約で TS を返す。C# / Native AOT |
 | [**blog**](https://github.com/danything/blog) | [doany.io](https://doany.io) のソース。[Fuwari](https://github.com/saicaca/fuwari) ベースの Astro 製静的ブログ（Pagefind 検索 / remark42 コメント） |
-| [**xool**](https://github.com/danything/xool) | [x.doany.io](https://x.doany.io) — Webhook から 𝕏 に投稿する API と、LGTM 画像の生成・ホスティング |
+| [**xool**](https://github.com/danything/xool) | [x.doany.io](https://x.doany.io) — 𝕏 の前日のポストを集計して、通信簿として自動ポストする |
+| [**lgtm**](https://github.com/danything/lgtm) | [l.doany.io](https://l.doany.io) — 画像を放り込むと LGTM を敷き詰めて webp で保存し、貼り付け用のマークダウンを返す。xool から分離 |
+| [**yuzuriha**](https://github.com/danything/yuzuriha) | 譲葉 — 0円物件を掲載サイトから集めて、衛星写真の地図に表示するサイト |
 
 ## Tech Stack
 
@@ -91,6 +94,9 @@ worklog は、普段使っている **Slack・GitHub・GitLab・Backlog・Jira�
 ![Bun](https://img.shields.io/badge/Bun-000000?style=flat-square&logo=bun&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
 ![Biome](https://img.shields.io/badge/Biome-60A5FA?style=flat-square&logo=biome&logoColor=white)
+![C#](https://img.shields.io/badge/C%23-512BD4?style=flat-square&logo=dotnet&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white)
+![Caddy](https://img.shields.io/badge/Caddy-1F88C0?style=flat-square&logo=caddy&logoColor=white)
 ![Shell](https://img.shields.io/badge/Shell-4EAA25?style=flat-square&logo=gnubash&logoColor=white)
 
 </div>
