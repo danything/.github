@@ -2,7 +2,7 @@
 
 # Doa（ドゥエー）
 
-**気ままな備忘録 — 自宅 k3s クラスタと、そこで動くものたち。**
+自宅のk3sクラスタと、その上で動かしているものの置き場。
 
 [![Website](https://img.shields.io/badge/doany.io-000000?style=for-the-badge&logo=astro&logoColor=white)](https://doany.io)
 [![Blog](https://img.shields.io/badge/Blog-FF5D01?style=for-the-badge&logo=rss&logoColor=white)](https://doany.io/archive/)
@@ -16,64 +16,64 @@
 
 ## About
 
-個人で運用している自宅 Kubernetes（k3s）クラスタと、その上で動かしているアプリケーションを公開しています。
+個人で運用している自宅のk3sクラスタと、そこで動かしているアプリを公開しています。
 
-ホームラボの構成は **GitOps（ArgoCD）で全部リポジトリに寄せる**方針で、マニフェストを push すれば勝手に反映される状態を目指しています。日々の試行錯誤やハマりどころは [doany.io](https://doany.io) に記事として残しています。
+構成はArgoCDのGitOpsに寄せていて、マニフェストをpushすればクラスタに反映されます。ハマったことや調べたことは[doany.io](https://doany.io)に書いています。
 
-- 🏗 **Infrastructure as Code** — k3s + ArgoCD + Traefik + Sealed Secrets
-- 📦 **Containerize everything** — レガシーな業務システムも Docker / Helm chart 化
-- 🤖 **Automate** — GitHub Actions で定期ビルド → GHCR へ push → ArgoCD がデプロイ
-- ✍️ **Write it down** — Web・インフラ・決済まわり・車の話まで、備忘録として
+- k3s + ArgoCD + Traefik + Infisical
+- 古い業務システムもDocker / Helm chartにして載せる
+- GitHub ActionsでビルドしてGHCRにpush、ArgoCDがデプロイ
+- 記事はインフラ・Web・決済・車など
 
 ## Products
 
-### 📊 worklog — [w.doany.io](https://w.doany.io)
+### worklog（[w.doany.io](https://w.doany.io)）
 
-**インストール不要で、先月の稼働表を今から作れる。**
+先月の稼働表を、今から作れます。
 
-稼働表のために、毎日タイマーを押すのはもうやめませんか。
-worklog は、普段使っている **Slack・GitHub・GitLab・Backlog・Jira・OpenProject・Redmine** の記録から、日別の稼働開始・終了・休憩・実働を自動で組み立てます。
+普段使っているSlack・GitHub・GitLab・Backlog・Jira・OpenProject・Redmineの記録から、日別の稼働開始・終了・休憩・実働を組み立てます。
 
-- ⏱ **常駐ツールなし** — PC には何も入れません。入れ忘れも、押し忘れもありません
-- ⏪ **過去にさかのぼれる** — 「先月分を今すぐ出したい」に、今日から間に合います
-- 🔗 **つなぐだけ** — 使っているサービスを連携したら、あとは月を選ぶだけ
-- 🔑 **GitHub アカウントでログイン** — 登録フォームはありません
+- PCに常駐ツールを入れません
+- 過去の月にさかのぼって作れます
+- 使っているサービスを連携して、月を選ぶだけです
+- ログインはGitHubアカウントです
 
-> 🎁 **早期利用期間中につき、全機能を無料で開放しています。**（正式リリース後も直近 2 ヶ月分は無料。全期間さかのぼれる Pro プランが月額 1,200円・税別）
+> 早期利用期間中は全機能を無料で開放しています。正式リリース後も今月と先月の分は無料で、全期間さかのぼれるProが月額1,200円（税別）です。
 
-[**▶ 今すぐ試す**](https://w.doany.io) ・ お問い合わせは [info@doany.io](mailto:info@doany.io)
+[今すぐ試す](https://w.doany.io)・お問い合わせは[info@doany.io](mailto:info@doany.io)
 
-### 🌱 新規サービス
+### 新規サービス（準備中）
 
-**事業計画中。**
+中古車を型式から探せるサービスを考えています。まずは土台になる車両マスター（型式→通称名・製作者・諸元・販売期間）を、燃費一覧・官報の型式指定・リコール届出などの公的データから作っているところです。
 
-中古車を型式から探せるようにするサービスを構想しています。いまはその土台として、国交省・運輸省が公表している燃費一覧（1997〜）から車両マスター（型式 → 通称名・製作者・諸元・販売期間）を組み立てているところです。
-
-続報は [doany.io](https://doany.io) にて。
+続報は[doany.io](https://doany.io)に書きます。
 
 ## Repositories
 
-### インフラ / ホームラボ
+### インフラ/ホームラボ
 
 | Repository | 概要 |
 | --- | --- |
-| [**k3s-gitops**](https://github.com/danything/k3s-gitops) | k3s クラスタ上のセルフホストアプリ群（AdGuard Home / Cloudflare DDNS / ERPNext / Mattermost / Portainer / WireGuard / 3proxy）を ArgoCD で管理 |
-| [**helm-mosp**](https://github.com/danything/helm-mosp) | OSS 勤怠管理 [MosP](https://github.com/es-mind/MosP) の Docker イメージ化と Helm chart 配布。毎月最新コミットを自動ビルド |
-| [**genkan**](https://github.com/danything/genkan) | コンテナの玄関 — compose.yml 1枚のリバースプロキシ。ローカルの `*.localhost` から実ドメインまで同じ構成で振り分け |
+| [**k3s-gitops**](https://github.com/danything/k3s-gitops) | k3s上のセルフホストアプリ（AdGuard Home、Cloudflare DDNS、ERPNext、Mattermost、Portainer、WireGuard、3proxy）のマニフェスト。ArgoCDで同期 |
+| [**helm-mosp**](https://github.com/danything/helm-mosp) | 勤怠管理[MosP](https://github.com/es-mind/MosP)のDockerイメージとHelm chart。毎月、最新コミットを自動でビルドしてGHCRに置く |
+| [**genkan**](https://github.com/danything/genkan) | compose.yml 1枚のリバースプロキシ。ローカルの`*.localhost`も本番のドメインも同じ設定で振り分ける |
+| [**infisical-push-bridge**](https://github.com/danything/infisical-push-bridge) | セルフホストのInfisical（無料版）で、Webhookを受けて`InfisicalSecret`をその場で同期させる。Helm chartあり |
 
 > [!NOTE]
-> クラスタ本体の初期構築（k3s のセットアップ、Traefik / ArgoCD / Sealed Secrets / 認証まわりのアドオン、StorageClass、バックアップ）は非公開のリポジトリで管理しています。上記の各リポジトリは、それが済んだクラスタに乗る**アプリ側のマニフェストのみ**を含み、直下の `k3s/argocd.yaml` を ApplicationSet が拾って Application を生成します。
+> クラスタの初期構築（k3s、Traefik、ArgoCD、Infisical、認証、StorageClass、バックアップ）は非公開のリポジトリにあります。ここに並べたのはその上に載せるアプリ側のマニフェストで、各リポジトリの`k3s/argocd.yaml`をApplicationSetが拾ってApplicationを作ります。
 
 ### アプリケーション
 
 | Repository | 概要 |
 | --- | --- |
-| [**denpa**](https://github.com/danything/denpa) | チューナーエージェント（選局）と 2 つだけで完結するテレビ録画アプリ。番組表・予約・録画・エンコード・配信・ライブ視聴を担い、メディアサーバは置かない。Docker / Kubernetes 用のイメージを GHCR で配布 |
-| [**denpa-agent-windows**](https://github.com/danything/denpa-agent-windows) | denpa のチューナーエージェントの Windows 版。BonDriver で選局し、Linux 版（denpa 本体の `agent/`）と同じ HTTP 契約で TS を返す。C# / Native AOT |
-| [**blog**](https://github.com/danything/blog) | [doany.io](https://doany.io) のソース。[Fuwari](https://github.com/saicaca/fuwari) ベースの Astro 製静的ブログ（Pagefind 検索 / remark42 コメント） |
-| [**xool**](https://github.com/danything/xool) | [x.doany.io](https://x.doany.io) — 𝕏 の前日のポストを集計して、通信簿として自動ポストする |
-| [**lgtm**](https://github.com/danything/lgtm) | [l.doany.io](https://l.doany.io) — 画像を放り込むと LGTM を敷き詰めて webp で保存し、貼り付け用のマークダウンを返す。xool から分離 |
-| [**yuzuriha**](https://github.com/danything/yuzuriha) | 譲葉 — 0円物件を掲載サイトから集めて、衛星写真の地図に表示するサイト |
+| [**denpa**](https://github.com/danything/denpa) | 自宅に置くテレビ録画サーバ。番組表から予約して、録ったものも放送中のものもブラウザで観る。チューナー側はエージェントに分けてあり、Docker / Kubernetes用のイメージをGHCRで配布 |
+| [**denpa-agent-windows**](https://github.com/danything/denpa-agent-windows) | denpaのチューナーエージェントのWindows版。BonDriverで選局して、Linux版と同じHTTPでTSを返す。C#のNative AOT |
+| [**blog**](https://github.com/danything/blog) | [doany.io](https://doany.io)のソース。[Fuwari](https://github.com/saicaca/fuwari)ベースのAstro製ブログ。検索はPagefind、コメントはyosegaki |
+| [**yosegaki**](https://github.com/danything/yosegaki) | SvelteKit + Bun + SQLiteのコメントサーバ。scriptタグ1つで埋め込めて、管理画面は無い |
+| [**aizuchi**](https://github.com/danything/aizuchi) | Slackで相槌を打つAIボット。コネクタとLLMプロバイダを差し替えられる.NET Native AOTの器で、Helm chart付き |
+| [**xool**](https://github.com/danything/xool) | [x.doany.io](https://x.doany.io)。𝕏の前日のポストを集計して、通信簿として自動でポストする |
+| [**lgtm**](https://github.com/danything/lgtm) | [l.doany.io](https://l.doany.io)。画像を放り込むとLGTMを敷き詰めたwebpにして、貼り付け用のMarkdownを返す |
+| [**yuzuriha**](https://github.com/danything/yuzuriha) | [y.doany.io](https://y.doany.io)。0円物件を掲載サイトから集めて、衛星写真の地図に載せる |
 
 ## Tech Stack
 
@@ -105,6 +105,6 @@ worklog は、普段使っている **Slack・GitHub・GitLab・Backlog・Jira�
 
 <div align="center">
 
-**[doany.io](https://doany.io)** ・ [info@doany.io](mailto:info@doany.io)
+**[doany.io](https://doany.io)**・[info@doany.io](mailto:info@doany.io)
 
 </div>
