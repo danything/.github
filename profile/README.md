@@ -20,7 +20,7 @@
 
 構成はArgoCDのGitOpsに寄せていて、マニフェストをpushすればクラスタに反映されます。ハマったことや調べたことは[doany.io](https://doany.io)に書いています。
 
-- k3s + ArgoCD + Cilium（Gateway API）+ Infisical
+- k3s + ArgoCD + Cilium（Gateway API）+ Infisical。Cloudflare・Entra IDの設定はPulumiで持つ
 - 古い業務システムもDocker / Helm chartにして載せる
 - 公開リポジトリはGitHub ActionsでビルドしてGHCRへ、非公開のものは自宅の[Forgejo](https://forgejo.org/)のActionsでビルドして同じForgejoのレジストリへ。どちらもArgoCDがデプロイ
 - 記事はインフラ・Web・決済・車など
@@ -65,10 +65,11 @@
 
 | Repository | 概要 |
 | --- | --- |
-| [**gitops**](https://github.com/danything/gitops) | k3s上のセルフホストアプリ（Forgejo、Mattermost、AdGuard Home、ERPNext、NetBird、Headlamp、Infisical、k8up、Cloudflare DDNS、3proxy）のマニフェストと、クラスタを組む層（ArgoCD、Cilium Gateway、cert-manager、Entra IDの認証）。Talosへ移す準備も |
+| [**gitops**](https://github.com/danything/gitops) | k3s上のセルフホストアプリ（Forgejo、Matrix、AdGuard Home、NetBird、Headlamp、Infisical、Rybbit、k8up、external-dns、Cloudflare DDNS、3proxy）のマニフェストと、クラスタを組む層（ArgoCD、Cilium Gateway、cert-manager、Entra IDの認証）。Cloudflare・EntraのPulumi、restic → R2のバックアップ、Talosへ移す準備も |
 | [**helm-mosp**](https://github.com/danything/helm-mosp) | 勤怠管理[MosP](https://github.com/es-mind/MosP)のDockerイメージとHelm chart。毎月、最新コミットを自動でビルドしてGHCRに置く |
 | [**genkan**](https://github.com/danything/genkan) | compose.yml 1枚のリバースプロキシ。ローカルの`*.localhost`も本番のドメインも同じ設定で振り分ける |
 | [**infisical-push-bridge**](https://github.com/danything/infisical-push-bridge) | セルフホストのInfisical（無料版）で、Webhookを受けて`InfisicalSecret`をその場で同期させる。Helm chartあり |
+| [**wslc-compose**](https://github.com/danything/wslc-compose) | `compose.yaml`をWSLコンテナ（`wslc`）で動かす。docker composeのよく使う範囲を依存クレートなしのRustで。wingetで入る |
 
 > [!NOTE]
 > ProductsのShadai・車両カタログ・worklogのソースは、自宅の[Forgejo](https://forgejo.org/)にある非公開のリポジトリです。ArgoCDのApplicationSetがGitHubとForgejoの両方のリポジトリを走査し、各リポジトリの`deploy/argocd.yaml`を見つけてApplicationを作ります。
@@ -77,10 +78,12 @@
 
 | Repository | 概要 |
 | --- | --- |
-| [**denpa**](https://github.com/danything/denpa) | 自宅に置くテレビ録画サーバ。番組表から予約して、録ったものも放送中のものもブラウザで観る。チューナー側はエージェントに分けてあり、Docker / Kubernetes用のイメージをGHCRで配布 |
-| [**denpa-agent-windows**](https://github.com/danything/denpa-agent-windows) | denpaのチューナーエージェントのWindows版。BonDriverで選局して、Linux版と同じHTTPでTSを返す。C#のNative AOT |
+| [**denpa**](https://github.com/danything/denpa) | チューナーを挿すだけで動くテレビ録画サーバ。設定ファイルは書かず、番組表から予約して、録画もライブも字幕・データ放送つきでブラウザで観る。CMは自動で飛ばす。Linux・Mac・Windows・Kubernetes |
+| [**denpa-tv**](https://github.com/danything/denpa-tv) | denpaをAndroid TV / Google TVで観るアプリ。Jetpack Compose for TV |
+| [**denpa-font**](https://github.com/danything/denpa-font) | denpaの字幕・データ放送用の丸ゴシック。Rounded M+ 1mと和田研中丸ゴシック2004ARIBから合成し、放送で使う字に絞ったもの |
 | [**blog**](https://github.com/danything/blog) | [doany.io](https://doany.io)のソース。[Fuwari](https://github.com/saicaca/fuwari)ベースのAstro製ブログ。検索はPagefind、コメントはyosegaki |
-| [**yosegaki**](https://github.com/danything/yosegaki) | SvelteKit + Bun + SQLiteのコメントサーバ。scriptタグ1つで埋め込めて、管理画面は無い |
+| [**yosegaki**](https://github.com/danything/yosegaki) | SvelteKit + Bun + SQLiteのコメントサーバ。scriptタグ1つで埋め込めて、管理画面は無い。どのコメント欄からでもサイト全体の新着と自分宛ての返信が見える |
+| [**ashi**](https://github.com/danything/ashi) | AIに、足を。話しかけられなくても自分で問いを選んで調べ、ノートと日記を残して休むAI。頭はClaude API、足（ループ・予算・ガードレール）はSvelteKit + Bun |
 | [**aizuchi**](https://github.com/danything/aizuchi) | Slackで相槌を打つAIボット。コネクタとLLMプロバイダを差し替えられる.NET Native AOTの器で、Helm chart付き |
 | [**xool**](https://github.com/danything/xool) | [x.doany.io](https://x.doany.io)。𝕏の前日のポストを集計して、通信簿として自動でポストする |
 | [**lgtm**](https://github.com/danything/lgtm) | [l.doany.io](https://l.doany.io)。画像を放り込むとLGTMを敷き詰めたwebpにして、貼り付け用のMarkdownを返す |
@@ -100,6 +103,7 @@
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)
 ![Renovate](https://img.shields.io/badge/Renovate-1A1F6C?style=flat-square&logo=renovate&logoColor=white)
 ![Cloudflare](https://img.shields.io/badge/Cloudflare-F38020?style=flat-square&logo=cloudflare&logoColor=white)
+![Pulumi](https://img.shields.io/badge/Pulumi-8A3391?style=flat-square&logo=pulumi&logoColor=white)
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
 ![Svelte](https://img.shields.io/badge/Svelte-FF3E00?style=flat-square&logo=svelte&logoColor=white)
@@ -108,6 +112,8 @@
 ![Playwright](https://img.shields.io/badge/Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white)
 ![Biome](https://img.shields.io/badge/Biome-60A5FA?style=flat-square&logo=biome&logoColor=white)
 ![C#](https://img.shields.io/badge/C%23-512BD4?style=flat-square&logo=dotnet&logoColor=white)
+![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=flat-square&logo=kotlin&logoColor=white)
+![Rust](https://img.shields.io/badge/Rust-000000?style=flat-square&logo=rust&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white)
 ![Stripe](https://img.shields.io/badge/Stripe-635BFF?style=flat-square&logo=stripe&logoColor=white)
 ![Caddy](https://img.shields.io/badge/Caddy-1F88C0?style=flat-square&logo=caddy&logoColor=white)
