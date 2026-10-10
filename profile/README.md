@@ -20,29 +20,29 @@
 
 構成はArgoCDのGitOpsに寄せていて、マニフェストをpushすればクラスタに反映されます。ハマったことや調べたことは[doany.io](https://doany.io)に書いています。
 
-- k3s + ArgoCD + Cilium（Gateway API）+ Infisical
+- k3s + ArgoCD + Cilium（Gateway API）+ Infisical。Cloudflare・Entra IDの設定はPulumiで持つ
 - 古い業務システムもDocker / Helm chartにして載せる
 - 公開リポジトリはGitHub ActionsでビルドしてGHCRへ、非公開のものは自宅の[Forgejo](https://forgejo.org/)のActionsでビルドして同じForgejoのレジストリへ。どちらもArgoCDがデプロイ
 - 記事はインフラ・Web・決済・車など
 
 ## Products
 
-### Shadai / 車台（[sd.doany.io](https://sd.doany.io)）
+### トドロク（[tk.doany.io](https://tk.doany.io)）
 
-車両台帳と、登録・届出の書類作成。
+中古車店の台帳と帳簿と書類。
 
-車検証を一度入れれば（2次元コードをスマホで読めます）、車検・自賠責・税の期限のお知らせ、仕入れから販売までの工程、1台ごとの費用と利益、名義変更・車庫証明・構造等変更（重量分布計算書）の書類まで、自分で作れます。中古車の販売店や整備工場のような、車を何台も持つ人向けです。
+車検証の2次元コードをスマホで読めば1台が登録され、車検・自賠責・税の期限のお知らせ、仕入れから販売までの工程、1台ごとの原価と利益、古物台帳、請求書・領収書（インボイス）・仕入明細書、名義変更・車庫証明・抹消・構造等変更（重量分布計算書）の書類まで、その車の値で出せます。中古車の販売店や整備工場のような、車を何台も持つ人向けです。
 
-- 台帳は3台まで無料。書類の入力と判定（OK / NG）も無料です
-- 書類の印刷は1台1,100円、または月5,500円で台数無制限（税込。決済はStripe）
+- 台帳は3台まで無料。入力・判定・チェックリスト・期限のメールも無料です
+- 書類の印刷は1台550円の買い切り、または月3,300円（年33,000円）で台数無制限。月額はCSV出力とスタッフ・会計（税理士）の招待つき（税込。決済はStripe）
 - ログインはGoogle・Microsoft・メールです
-- 型式からの車両情報は下の車両カタログから引きます
+- 型式からの車両情報は下の車両カタログから引きます。開業や手続きの[ガイド](https://tk.doany.io/guide)もあります
 
-[無料で台帳を作る](https://sd.doany.io)・[料金](https://sd.doany.io/pricing)
+[無料で台帳を作る](https://tk.doany.io)・[料金](https://tk.doany.io/pricing)
 
 ### tama 車両カタログ（[ts.doany.io](https://ts.doany.io)）
 
-日本で型式指定を受けた自動車2万型式超のカタログ。型式・通称名・型式指定番号から、諸元・燃費・販売期間・官報の型式指定・リコール届出を横断検索できます。燃費一覧・官報・リコール届出などの公的データから組み立てていて、Shadaiの車両マスターでもあります。
+日本で型式指定を受けた自動車2万型式超のカタログ。型式・通称名・型式指定番号から、諸元・燃費・販売期間・官報の型式指定・リコール届出を横断検索できます。燃費一覧・官報・リコール届出などの公的データから組み立てていて、トドロクの車両マスターでもあります。
 
 ### worklog（[w.doany.io](https://w.doany.io)）
 
@@ -65,22 +65,25 @@
 
 | Repository | 概要 |
 | --- | --- |
-| [**gitops**](https://github.com/danything/gitops) | k3s上のセルフホストアプリ（Forgejo、Mattermost、AdGuard Home、ERPNext、NetBird、Headlamp、Infisical、k8up、Cloudflare DDNS、3proxy）のマニフェストと、クラスタを組む層（ArgoCD、Cilium Gateway、cert-manager、Entra IDの認証）。Talosへ移す準備も |
+| [**gitops**](https://github.com/danything/gitops) | k3s上のセルフホストアプリ（Forgejo、Matrix、AdGuard Home、NetBird、Headlamp、Infisical、Rybbit、k8up、external-dns、Cloudflare DDNS、3proxy）のマニフェストと、クラスタを組む層（ArgoCD、Cilium Gateway、cert-manager、Entra IDの認証）。Cloudflare・EntraのPulumi、restic → R2のバックアップ、Talosへ移す準備も |
 | [**helm-mosp**](https://github.com/danything/helm-mosp) | 勤怠管理[MosP](https://github.com/es-mind/MosP)のDockerイメージとHelm chart。毎月、最新コミットを自動でビルドしてGHCRに置く |
 | [**genkan**](https://github.com/danything/genkan) | compose.yml 1枚のリバースプロキシ。ローカルの`*.localhost`も本番のドメインも同じ設定で振り分ける |
 | [**infisical-push-bridge**](https://github.com/danything/infisical-push-bridge) | セルフホストのInfisical（無料版）で、Webhookを受けて`InfisicalSecret`をその場で同期させる。Helm chartあり |
+| [**wslc-compose**](https://github.com/danything/wslc-compose) | `compose.yaml`をWSLコンテナ（`wslc`）で動かす。docker composeのよく使う範囲を依存クレートなしのRustで。wingetで入る |
 
 > [!NOTE]
-> ProductsのShadai・車両カタログ・worklogのソースは、自宅の[Forgejo](https://forgejo.org/)にある非公開のリポジトリです。ArgoCDのApplicationSetがGitHubとForgejoの両方のリポジトリを走査し、各リポジトリの`deploy/argocd.yaml`を見つけてApplicationを作ります。
+> Productsのトドロク・車両カタログ・worklogのソースは、自宅の[Forgejo](https://forgejo.org/)にある非公開のリポジトリです。ArgoCDのApplicationSetがGitHubとForgejoの両方のリポジトリを走査し、各リポジトリの`deploy/argocd.yaml`を見つけてApplicationを作ります。
 
 ### アプリケーション
 
 | Repository | 概要 |
 | --- | --- |
-| [**denpa**](https://github.com/danything/denpa) | 自宅に置くテレビ録画サーバ。番組表から予約して、録ったものも放送中のものもブラウザで観る。チューナー側はエージェントに分けてあり、Docker / Kubernetes用のイメージをGHCRで配布 |
-| [**denpa-agent-windows**](https://github.com/danything/denpa-agent-windows) | denpaのチューナーエージェントのWindows版。BonDriverで選局して、Linux版と同じHTTPでTSを返す。C#のNative AOT |
+| [**denpa**](https://github.com/danything/denpa) | チューナーを挿すだけで動くテレビ録画サーバ。設定ファイルは書かず、番組表から予約して、録画もライブも字幕・データ放送つきでブラウザで観る。CMは自動で飛ばす。Linux・Mac・Windows・Kubernetes |
+| [**denpa-tv**](https://github.com/danything/denpa-tv) | denpaをAndroid TV / Google TVで観るアプリ。Jetpack Compose for TV |
+| [**denpa-font**](https://github.com/danything/denpa-font) | denpaの字幕・データ放送用の丸ゴシック。Rounded M+ 1mと和田研中丸ゴシック2004ARIBから合成し、放送で使う字に絞ったもの |
 | [**blog**](https://github.com/danything/blog) | [doany.io](https://doany.io)のソース。[Fuwari](https://github.com/saicaca/fuwari)ベースのAstro製ブログ。検索はPagefind、コメントはyosegaki |
-| [**yosegaki**](https://github.com/danything/yosegaki) | SvelteKit + Bun + SQLiteのコメントサーバ。scriptタグ1つで埋め込めて、管理画面は無い |
+| [**yosegaki**](https://github.com/danything/yosegaki) | SvelteKit + Bun + SQLiteのコメントサーバ。scriptタグ1つで埋め込めて、管理画面は無い。どのコメント欄からでもサイト全体の新着と自分宛ての返信が見える |
+| [**ashi**](https://github.com/danything/ashi) | AIに、足を。話しかけられなくても自分で問いを選んで調べ、ノートと日記を残して休むAI。頭はClaude API、足（ループ・予算・ガードレール）はSvelteKit + Bun |
 | [**aizuchi**](https://github.com/danything/aizuchi) | Slackで相槌を打つAIボット。コネクタとLLMプロバイダを差し替えられる.NET Native AOTの器で、Helm chart付き |
 | [**xool**](https://github.com/danything/xool) | [x.doany.io](https://x.doany.io)。𝕏の前日のポストを集計して、通信簿として自動でポストする |
 | [**lgtm**](https://github.com/danything/lgtm) | [l.doany.io](https://l.doany.io)。画像を放り込むとLGTMを敷き詰めたwebpにして、貼り付け用のMarkdownを返す |
@@ -100,6 +103,7 @@
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)
 ![Renovate](https://img.shields.io/badge/Renovate-1A1F6C?style=flat-square&logo=renovate&logoColor=white)
 ![Cloudflare](https://img.shields.io/badge/Cloudflare-F38020?style=flat-square&logo=cloudflare&logoColor=white)
+![Pulumi](https://img.shields.io/badge/Pulumi-8A3391?style=flat-square&logo=pulumi&logoColor=white)
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
 ![Svelte](https://img.shields.io/badge/Svelte-FF3E00?style=flat-square&logo=svelte&logoColor=white)
@@ -108,6 +112,8 @@
 ![Playwright](https://img.shields.io/badge/Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white)
 ![Biome](https://img.shields.io/badge/Biome-60A5FA?style=flat-square&logo=biome&logoColor=white)
 ![C#](https://img.shields.io/badge/C%23-512BD4?style=flat-square&logo=dotnet&logoColor=white)
+![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=flat-square&logo=kotlin&logoColor=white)
+![Rust](https://img.shields.io/badge/Rust-000000?style=flat-square&logo=rust&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white)
 ![Stripe](https://img.shields.io/badge/Stripe-635BFF?style=flat-square&logo=stripe&logoColor=white)
 ![Caddy](https://img.shields.io/badge/Caddy-1F88C0?style=flat-square&logo=caddy&logoColor=white)
